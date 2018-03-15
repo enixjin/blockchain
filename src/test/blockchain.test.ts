@@ -5,9 +5,9 @@ import {Blockchain} from "../blockchain/blockchain";
 import {Transaction} from "../blockchain/transaction";
 
 let enixCoin = new Blockchain(5);
-console.log("System give 100 to enixjin");
+console.log("add transaction:System give 100 to enixjin");
 enixCoin.addTransaction(new Transaction("System", "enixjin", 100));
-console.log("enixjin give other 50");
+console.log("add transaction:enixjin give other 50");
 enixCoin.addTransaction(new Transaction("enixjin", "other", 50));
 
 console.log("enixjin start mining...");
