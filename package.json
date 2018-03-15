@@ -1,0 +1,16 @@
+{
+  "name": "blockchain",
+  "version": "1.0.0",
+  "description": "poc of blockchain",
+  "main": "index.js",
+  "scripts": {
+    "test": "ts-node src/test/blockchain.test.ts"
+  },
+  "author": "enixjin",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^9.4.7",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2"
+  }
+}
