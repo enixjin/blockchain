@@ -44,7 +44,9 @@ export class Blockchain {
         for (let i = 1; i < this.chain.length; i++) {
             const current = this.chain[i];
             const previous = this.chain[i - 1];
-            if ((current.hash !== current.calculateHash()) || (current.previousHash !== previous.hash)) {
+            if ((current.hash !== current.calculateHash())
+                || (current.previousHash !== previous.hash)
+                || current.hash.substring(0, this.difficulty) != Array(this.difficulty + 1).join("0")) {
                 return false;
             }
         }

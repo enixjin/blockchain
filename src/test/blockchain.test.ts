@@ -28,6 +28,14 @@ describe("enixCoin test", function () {
             assert.equal(enixCoin.isValid(), false);
         });
 
+        it("should be invalid if hash is manipulated", () => {
+
+            enixCoin.mine("enixjin");
+            enixCoin["chain"][1].hash = "00001c3767f41ecf575c373eb85b3eb72ad99b39c5c55bbfab81936ee5a57390";
+
+            assert.equal(enixCoin.isValid(), false);
+        });
+
         it("should have correct balance after transaction and mining reward", () => {
 
             enixCoin.addTransaction(new Transaction("System", "enixjin", 100));
