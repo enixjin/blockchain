@@ -23,17 +23,19 @@ export class Blockchain {
     }
 
     addTransaction(transaction: Transaction): void {
+        console.log(`adding transaction:${transaction.from} give ${transaction.to} ${transaction.amount}`);
         this.pendingTransactions.push(transaction);
     }
 
     mine(rewardAddress: string) {
+        console.log(`address:${rewardAddress} is start mining...`);
         const transactions = this.pendingTransactions.splice(0, 4);
         let block = new Block([
             ...transactions,
             new Transaction("System", rewardAddress, this.miningReward * transactions.length)
         ]);
         block.mineBlock(this.difficulty);
-        console.log(`${rewardAddress} get ${this.miningReward * transactions.length} for mining!`);
+        console.log(`address:${rewardAddress} get ${this.miningReward * transactions.length} for mining!`);
         this.chain.push(block);
     }
 
