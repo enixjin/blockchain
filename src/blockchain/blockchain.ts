@@ -34,6 +34,7 @@ export class Blockchain {
             ...transactions,
             new Transaction("System", rewardAddress, this.miningReward * transactions.length)
         ]);
+        block.previousHash = this.getLatest().hash;
         block.mineBlock(this.difficulty);
         console.log(`address:${rewardAddress} get ${this.miningReward * transactions.length} for mining!`);
         this.chain.push(block);
