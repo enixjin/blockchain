@@ -10,12 +10,10 @@ export class Blockchain {
     // reward for each transaction
     miningReward = 10;
 
-    constructor(private difficulty: number) {
-        this.chain = [this.initialBlock()];
-    }
+    private genesisBlock: Block = new Block([], new Date(), "0");
 
-    private initialBlock(): Block {
-        return new Block([], new Date(), "0");
+    constructor(private difficulty: number) {
+        this.chain = [this.genesisBlock];
     }
 
     getLatest(): Block {
@@ -27,6 +25,14 @@ export class Blockchain {
         this.pendingTransactions.push(transaction);
     }
 
+    replaceChain(newChain: Block[]): boolean {
+        if (this.isValid(newChain) && newChain.length > this.chain.length) {
+            console.log("Replacing current blockchain with new blockchain");
+            return true;
+        }
+        return false;
+    }
+
     mine(rewardAddress: string) {
         console.log(`address:${rewardAddress} is start mining...`);
         const transactions = this.pendingTransactions.splice(0, 4);
@@ -36,14 +42,18 @@ export class Blockchain {
         ]);
         block.previousHash = this.getLatest().hash;
         block.mineBlock(this.difficulty);
+        block.index = this.getLatest().index + 1;
         console.log(`address:${rewardAddress} get ${this.miningReward * transactions.length} for mining!`);
         this.chain.push(block);
     }
 
-    isValid(): boolean {
-        for (let i = 1; i < this.chain.length; i++) {
-            const current = this.chain[i];
-            const previous = this.chain[i - 1];
+    isValid(chain: Block[]): boolean {
+        if (JSON.stringify(chain[0]) !== JSON.stringify(chain[0])) {
+            return false;
+        }
+        for (let i = 1; i < chain.length; i++) {
+            const current = chain[i];
+            const previous = chain[i - 1];
             if ((current.hash !== current.calculateHash())
                 || (current.previousHash !== previous.hash)
                 || current.hash.substring(0, this.difficulty) != Array(this.difficulty + 1).join("0")) {

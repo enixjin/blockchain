@@ -8,12 +8,12 @@ const crypto = require('crypto');
 export class Block {
     hash = "";
 
-    constructor(public data: Transaction[], public timestamp: Date = new Date(), public previousHash = "", public nonce = 0) {
+    constructor(public data: Transaction[], public timestamp: Date = new Date(), public previousHash = "", public nonce = 0, public index = 0) {
         this.hash = this.calculateHash();
     }
 
     getString(): string {
-        return this.timestamp + JSON.stringify(this.data) + this.previousHash + this.nonce;
+        return this.index + this.timestamp.toString() + JSON.stringify(this.data) + this.previousHash + this.nonce;
     }
 
     calculateHash(): string {
